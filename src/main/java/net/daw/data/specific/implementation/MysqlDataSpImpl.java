@@ -43,6 +43,33 @@ public class MysqlDataSpImpl implements DataInterface {
         connection = pooledConnection;
     }
 
+    public String getTipoProductos(Integer id) throws Exception {
+        String strResult = null;
+        Statement oStatement = null;
+        ResultSet oResultSet = null;
+        try {
+            oStatement = (Statement) connection.createStatement();
+            String strSQL = "SELECT tipoproducto.descripcion from tipoproducto, producto, compra where tipoproducto.id=producto.id_tipoproducto and producto.id=compra.id_producto and compra.id_usuario=" + id;
+            oResultSet = oStatement.executeQuery(strSQL);
+            strResult = "[";
+            while (oResultSet.next()) {
+                strResult += oResultSet.getString("descripcion") + ",";
+            }
+            strResult = strResult.substring(0, strResult.length() - 1);
+            strResult += "]";
+        } catch (SQLException ex) {
+            ExceptionBooster.boost(new Exception(this.getClass().getName() + ":getId ERROR: Can't process query: " + ex.getMessage()));
+        } finally {
+            if (oResultSet != null) {
+                oResultSet.close();
+            }
+            if (oStatement != null) {
+                oStatement.close();
+            }
+        }
+        return strResult;
+    }
+
     @Override
     public int insertOne(String strTabla) throws Exception {
         ResultSet oResultSet = null;

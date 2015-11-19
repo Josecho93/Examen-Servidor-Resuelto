@@ -102,11 +102,61 @@ public class json extends HttpServlet {
             String ob = ParameterCook.prepareObject(request);
             String op = ParameterCook.prepareOperation(request);
             try {
-                String strClassName = "net.daw.service.specific.implementation." + ParameterCook.prepareCamelCaseObject(request) + "Service";
-                MetaServiceInterface oService = (MetaServiceInterface) Class.forName(strClassName).getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
-                Method oMethodService = oService.getClass().getMethod(ParameterCook.prepareOperation(request));
-                String jsonResult = (String) oMethodService.invoke(oService);
-                sendResponse2(request, response, jsonResult);
+
+                if ("login".equals(op)) {
+
+                    String strClassName = "net.daw.service.specific.implementation.UsuarioService";
+                    MetaServiceInterface oService = (MetaServiceInterface) Class.forName(strClassName).getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
+                    Method oMethodService = oService.getClass().getMethod(ParameterCook.prepareOperation(request));
+                    String jsonResult = (String) oMethodService.invoke(oService);
+                    sendResponse2(request, response, jsonResult);
+
+                }
+
+                if ("logout".equals(op)) {
+
+                    String strClassName = "net.daw.service.specific.implementation.UsuarioService";
+                    MetaServiceInterface oService = (MetaServiceInterface) Class.forName(strClassName).getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
+                    Method oMethodService = oService.getClass().getMethod(ParameterCook.prepareOperation(request));
+                    String jsonResult = (String) oMethodService.invoke(oService);
+                    sendResponse2(request, response, jsonResult);
+
+                }
+                if ("check".equals(op)) {
+
+                    String strClassName = "net.daw.service.specific.implementation.UsuarioService";
+                    MetaServiceInterface oService = (MetaServiceInterface) Class.forName(strClassName).getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
+                    Method oMethodService = oService.getClass().getMethod(ParameterCook.prepareOperation(request));
+                    String jsonResult = (String) oMethodService.invoke(oService);
+                    sendResponse2(request, response, jsonResult);
+
+                }
+
+                if ("change".equals(op)) {
+
+                    String strClassName = "net.daw.service.specific.implementation.UsuarioService";
+                    MetaServiceInterface oService = (MetaServiceInterface) Class.forName(strClassName).getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
+                    Method oMethodService = oService.getClass().getMethod(ParameterCook.prepareOperation(request));
+                    String jsonResult = (String) oMethodService.invoke(oService);
+                    sendResponse2(request, response, jsonResult);
+
+                }
+                
+                   if ("buy".equals(op)) {
+
+                    String strClassName = "net.daw.service.specific.implementation.UsuarioService";
+                    MetaServiceInterface oService = (MetaServiceInterface) Class.forName(strClassName).getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
+                    Method oMethodService = oService.getClass().getMethod(ParameterCook.prepareOperation(request));
+                    String jsonResult = (String) oMethodService.invoke(oService);
+                    sendResponse2(request, response, jsonResult);
+
+                }
+
+//                String strClassName = "net.daw.service.specific.implementation." + ParameterCook.prepareCamelCaseObject(request) + "Service";
+//                MetaServiceInterface oService = (MetaServiceInterface) Class.forName(strClassName).getDeclaredConstructor(HttpServletRequest.class).newInstance(request);
+//                Method oMethodService = oService.getClass().getMethod(ParameterCook.prepareOperation(request));
+//                String jsonResult = (String) oMethodService.invoke(oService);
+//                sendResponse2(request, response, jsonResult);
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":processRequest ERROR: no such operation"));
             }

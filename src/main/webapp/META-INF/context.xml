@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context antiJARLocking="true" cacheMaxSize="0" cacheTTL="1" cachingAllowed="false" path="/ausiasYield2015">
+<Context antiJARLocking="true" cacheMaxSize="0" cacheTTL="1" cachingAllowed="false" path="/examen-serv-1ev-2015-2016">
   <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="50" maxIdle="30" maxWait="10000" name="jdbc/ausiasYield2014" password="bitnami" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/ausiasYield2014" username="root" validationQuery="SELECT 1 FROM DUAL"/>
 </Context>

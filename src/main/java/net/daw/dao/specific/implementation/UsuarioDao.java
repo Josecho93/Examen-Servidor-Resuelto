@@ -37,20 +37,30 @@ public class UsuarioDao extends TableDaoGenImpl<UsuarioBean> {
         super(pooledConnection);
 
     }
-
+    public String getTipoProductos(Integer id) throws Exception {
+        
+        return oMysql.getTipoProductos(id);
+        
+        
+    }
+    
     public UsuarioBean getFromLogin(UsuarioBean oUsuario) throws Exception {
         try {
             String strId = oMysql.getId("usuario", "login", oUsuario.getLogin());
             if (strId == null) {
                 oUsuario.setId(0);
             } else {
-                Integer intId = Integer.parseInt(strId);
-                oUsuario.setId(intId);
-                String pass = oUsuario.getPassword();
-                oUsuario.setPassword(oMysql.getOne(strSqlSelectDataOrigin, "password", oUsuario.getId()));
-                if (!pass.equals(oUsuario.getPassword())) {
-                    oUsuario.setId(0);
-                }
+                
+                
+                
+                oUsuario.setId(Integer.parseInt(strId));
+//                Integer intId = Integer.parseInt(strId);
+//                oUsuario.setId(intId);
+//                String pass = oUsuario.getPassword();
+//                oUsuario.setPassword(oMysql.getOne(strSqlSelectDataOrigin, "password", oUsuario.getId()));
+//                if (!pass.equals(oUsuario.getPassword())) {
+//                    oUsuario.setId(0);
+//                }
                 oUsuario = this.get(oUsuario, AppConfigurationHelper.getJsonDepth());
             }
             return oUsuario;

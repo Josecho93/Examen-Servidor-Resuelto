@@ -36,16 +36,16 @@ import net.daw.helper.annotations.TableSourceMetaInformation;
 import net.daw.helper.statics.MetaEnum;
 
 @TableSourceMetaInformation(
-        TableName = "usuario",
+        TableName = "compra",
         Description = "Usuarios del sistema"
 )
-public class UsuarioBean extends BeanGenImpl implements BeanInterface {
+public class CompraBean extends BeanGenImpl implements BeanInterface {
 
-    public UsuarioBean() {
+    public CompraBean() {
         this.id = 0;
     }
 
-    public UsuarioBean(Integer id) {
+    public CompraBean(Integer id) {
         this.id = id;
     }
 
@@ -60,34 +60,30 @@ public class UsuarioBean extends BeanGenImpl implements BeanInterface {
     )
     private Integer id;
 
-    @Expose
+    @Expose(serialize = false)
     @MethodMetaInformation(
-            UltraShortName = "Login",
-            ShortName = "Login",
-            Description = "Nombre de usuario",
-            Type = MetaEnum.FieldType.String,
-            IsForeignKeyDescriptor = true
+            UltraShortName = "Usuario",
+            ShortName = "Usuario",
+            Description = "Identificador de Usuario",
+            IsIdForeignKey = true,
+            ReferencesTable = "usuario",
+            Type = MetaEnum.FieldType.Integer
     )
-    private String nombre = "";
-
-    @Expose
+    private Integer id_usuario = 0; //important zero-initialize foreign keys
+    
+     @Expose(serialize = false)
     @MethodMetaInformation(
-            UltraShortName = "Login",
-            ShortName = "Login",
-            Description = "Nombre de usuario",
-            Type = MetaEnum.FieldType.String,
-            IsForeignKeyDescriptor = true
+            UltraShortName = "Usuario",
+            ShortName = "Usuario",
+            Description = "Identificador de Usuario",
+            IsIdForeignKey = true,
+            ReferencesTable = "usuario",
+            Type = MetaEnum.FieldType.Integer
     )
-    private String ape1 = "";
-    @Expose
-    @MethodMetaInformation(
-            UltraShortName = "Login",
-            ShortName = "Login",
-            Description = "Nombre de usuario",
-            Type = MetaEnum.FieldType.String,
-            IsForeignKeyDescriptor = true
-    )
-    private String ape2 = "";
+    private Integer id_producto = 0; //important zero-initialize foreign keys
+    
+    
+  
     @Expose
     @MethodMetaInformation(
             UltraShortName = "Login",
@@ -96,26 +92,9 @@ public class UsuarioBean extends BeanGenImpl implements BeanInterface {
             Type = MetaEnum.FieldType.Integer,
             IsForeignKeyDescriptor = true
     )
-    private Integer sexo = 0;
+    private Integer cantidad = 0;
 
-    @Expose
-    @MethodMetaInformation(
-            UltraShortName = "Login",
-            ShortName = "Login",
-            Description = "Nombre de usuario",
-            Type = MetaEnum.FieldType.String,
-            IsForeignKeyDescriptor = true
-    )
-    private String login = "";
-
-    @Expose
-    @MethodMetaInformation(
-            UltraShortName = "Pass",
-            ShortName = "Password",
-            Description = "Frase de paso",
-            Type = MetaEnum.FieldType.String
-    )
-    private String password = "";
+   
 
     @Expose
     @MethodMetaInformation(
@@ -125,71 +104,78 @@ public class UsuarioBean extends BeanGenImpl implements BeanInterface {
             Type = MetaEnum.FieldType.Date,
             DefaultValue = "01/01/2000"
     )
-    private Date fnac = new Date();
+    private Date fecha = new Date();
 
+    /**
+     * @return the id
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     * @param id the id to set
+     */
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    /**
+     * @return the id_usuario
+     */
+    public Integer getId_usuario() {
+        return id_usuario;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    /**
+     * @param id_usuario the id_usuario to set
+     */
+    public void setId_usuario(Integer id_usuario) {
+        this.id_usuario = id_usuario;
     }
 
-    public String getApe1() {
-        return ape1;
+    /**
+     * @return the id_producto
+     */
+    public Integer getId_producto() {
+        return id_producto;
     }
 
-    public void setApe1(String ape1) {
-        this.ape1 = ape1;
+    /**
+     * @param id_producto the id_producto to set
+     */
+    public void setId_producto(Integer id_producto) {
+        this.id_producto = id_producto;
     }
 
-    public String getApe2() {
-        return ape2;
+    /**
+     * @return the cantidad
+     */
+    public Integer getCantidad() {
+        return cantidad;
     }
 
-    public void setApe2(String ape2) {
-        this.ape2 = ape2;
+    /**
+     * @param cantidad the cantidad to set
+     */
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
     }
 
-    public Integer getSexo() {
-        return sexo;
+    /**
+     * @return the fecha
+     */
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setSexo(Integer sexo) {
-        this.sexo = sexo;
+    /**
+     * @param fecha the fecha to set
+     */
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Date getFnac() {
-        return fnac;
-    }
-
-    public void setFnac(Date fnac) {
-        this.fnac = fnac;
-    }
 
     
 

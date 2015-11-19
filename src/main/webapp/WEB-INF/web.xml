@@ -22,7 +22,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>json</servlet-name>
-        <url-pattern>/json</url-pattern>
+        <url-pattern>/control</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
