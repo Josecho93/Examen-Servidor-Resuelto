@@ -42,13 +42,13 @@ import net.daw.bean.specific.implementation.CompraBean;
 import net.daw.dao.specific.implementation.CompraDao;
 
 public class UsuarioService extends TableServiceGenImpl {
-    
+
     public UsuarioService(HttpServletRequest request) {
         super(request);
     }
-    
+
     public String login() throws SQLException, Exception {
-        
+
         UsuarioBean oUserBean = (UsuarioBean) oRequest.getSession().getAttribute("userBean");
         String strAnswer = null;
         String strCode = "200";
@@ -67,7 +67,7 @@ public class UsuarioService extends TableServiceGenImpl {
                     oUsuario.setPassword(pass);
                     UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
                     oUsuario = oUsuarioDao.getFromLogin(oUsuario);
-                    
+
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTime(oUsuario.getFnac());
                     Integer m = calendar.get(Calendar.MONTH);
@@ -103,15 +103,15 @@ public class UsuarioService extends TableServiceGenImpl {
         } else {
             strAnswer = "{\"status\":\"OK\"}";
         }
-        
+
         return strAnswer;
     }
-    
+
     public String logout() {
         oRequest.getSession().invalidate();
         return "{\"status\":\"KO\"}";
     }
-    
+
     public String check() throws SQLException, Exception {
         UsuarioBean oUserBean = (UsuarioBean) oRequest.getSession().getAttribute("userBean");
         String retorno = "";
@@ -121,17 +121,17 @@ public class UsuarioService extends TableServiceGenImpl {
             retorno = "{\"status\":\"OK\",";
             retorno += "\"id\":" + oUserBean.getId() + ",";
             retorno += "\"nombrecompleto\":\"" + oUserBean.getNombre() + " " + oUserBean.getApe1() + " " + oUserBean.getApe2() + "\",";
-            
+
             ConnectionInterface DataConnectionSource = null;
             Connection oConnection = null;
             try {
                 DataConnectionSource = new BoneConnectionPoolImpl();
                 oConnection = DataConnectionSource.newConnection();
-                
+
                 UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
-                
+
                 retorno += "\"tipos\":\"" + oUsuarioDao.getTipoProductos(oUserBean.getId()) + "\"";
-                
+
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":login ERROR " + ex.toString()));
             } finally {
@@ -142,12 +142,12 @@ public class UsuarioService extends TableServiceGenImpl {
                     DataConnectionSource.disposeConnection();
                 }
             }
-            
+
             retorno += "}";
         }
         return retorno;
     }
-    
+
     public String getsessionstatus() {
         String strAnswer = null;
         UsuarioBean oUserBean = (UsuarioBean) oRequest.getSession().getAttribute("userBean");
@@ -157,16 +157,16 @@ public class UsuarioService extends TableServiceGenImpl {
             return JsonMessage.getJsonMsg("200", oUserBean.getLogin());
         }
     }
-    
+
     public String change() throws SQLException, Exception {
         UsuarioBean oUserBean = (UsuarioBean) oRequest.getSession().getAttribute("userBean");
         String retorno = "";
         if (oUserBean == null) {
             retorno = "{\"status\":\"KO\"}";
         } else {
-            
+
             String id_usuario = oRequest.getParameter("id_usuario");
-            
+
             ConnectionInterface DataConnectionSource = null;
             Connection oConnection = null;
             try {
@@ -174,14 +174,14 @@ public class UsuarioService extends TableServiceGenImpl {
                 oConnection = DataConnectionSource.newConnection();
                 UsuarioBean oUsuario = new UsuarioBean();
                 oUsuario.setId(Integer.parseInt(id_usuario));
-                
+
                 UsuarioDao oUsuarioDao = new UsuarioDao(oConnection);
                 oUsuario = oUsuarioDao.get(oUsuario, 2);
-                
+
                 oRequest.getSession().setAttribute("userBean", oUsuario);
-                
+
                 retorno = "{\"status\":\"OK\"}";
-                
+
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":login ERROR " + ex.toString()));
             } finally {
@@ -192,18 +192,18 @@ public class UsuarioService extends TableServiceGenImpl {
                     DataConnectionSource.disposeConnection();
                 }
             }
-            
+
         }
         return retorno;
     }
-    
+
     public String buy() throws SQLException, Exception {
         UsuarioBean oUserBean = (UsuarioBean) oRequest.getSession().getAttribute("userBean");
         String retorno = "";
         if (oUserBean == null) {
             retorno = "{\"status\":\"KO\"}";
         } else {
-            
+
             String id_producto = oRequest.getParameter("id_producto");
             String cantidad = oRequest.getParameter("cantidad");
 
@@ -217,13 +217,13 @@ public class UsuarioService extends TableServiceGenImpl {
                 oCompra.setId_producto(Integer.parseInt(id_producto));
                 oCompra.setId_usuario(oUserBean.getId());
                 oCompra.setCantidad(Integer.parseInt(cantidad));
-                
+
                 CompraDao oCompraDao = new CompraDao(oConnection);
-                
+
                 oCompraDao.set(oCompra);
-                
+
                 retorno = "{\"status\":\"OK\"}";
-                
+
             } catch (Exception ex) {
                 ExceptionBooster.boost(new Exception(this.getClass().getName() + ":login ERROR " + ex.toString()));
             } finally {
@@ -234,8 +234,30 @@ public class UsuarioService extends TableServiceGenImpl {
                     DataConnectionSource.disposeConnection();
                 }
             }
-            
+
         }
+        return retorno;
+    }
+
+    public String rem() throws SQLException, Exception {
+            String retorno= "";
+            ConnectionInterface DataConnectionSource = null;
+            Connection oConnection = null;
+        
+            DataConnectionSource = new BoneConnectionPoolImpl();
+            oConnection = DataConnectionSource.newConnection();
+            Integer idCompra = Integer.parseInt(oRequest.getParameter("id_compra"));
+            CompraBean oCompraBean = new CompraBean();
+            oCompraBean.setId(idCompra);
+            CompraDao oCompraDao = new CompraDao(oConnection);
+            oCompraBean = oCompraDao.get(oCompraBean, 1); //ahora ya tenemos el objeto lleno
+            if (oCompraBean.getId() != 0) {
+            oCompraDao.remove(oCompraBean);
+            retorno = "{\"status\":\"OKKKK\"}";
+        } else {
+                retorno = "{\"status\":\"KO\"}";
+        }
+
         return retorno;
     }
 
